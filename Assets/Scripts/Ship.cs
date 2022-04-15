@@ -4,27 +4,39 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Ship : MonoBehaviour
+public abstract class Ship : MonoBehaviour
 {
-    [SerializeField] float _actionRange = 3f;
-    [SerializeField] Team _team;
-    NavMeshAgent _agent;
-    Ship _target;
-    Coroutine _chaseCoroutine;
-    AIState _currentState;
+    [SerializeField] protected ShipTeam _team;
+    [SerializeField] protected ShipClass _shipClass;
+    protected float _health = 100f;
+    protected NavMeshAgent _agent;
+    protected Ship _target;
+    protected Coroutine _chaseCoroutine;
+    protected AIState _currentState;
+    public ShipTeam Team { get => _team; }
+
     public enum AIState
     {
         Chase,
         Action
     }
-    public enum Team
+    public enum ShipTeam
     {
         Mercenary,
         Pirate
     }
+
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _agent.acceleration = _shipClass.Acceleration;
+        _agent.angularSpeed = _shipClass.AngularSpeed;
+        _agent.speed = _shipClass.MaxSpeed;
+    }
+
+    private void Start()
+    {
+        _health = _shipClass.MaxHealth;
     }
 
     private void Update()
@@ -38,7 +50,7 @@ public class Ship : MonoBehaviour
         {
             case AIState.Chase:
 
-                if (distance < _actionRange)
+                if (distance < _shipClass.ActionRange)
                 {
                     _currentState = AIState.Action;
                     StopChase();
@@ -47,17 +59,17 @@ public class Ship : MonoBehaviour
                 break;
             case AIState.Action:
 
-                if (distance > _actionRange)
+                if (distance > _shipClass.ActionRange)
                 {
                     _currentState = AIState.Chase;
                     _chaseCoroutine = StartCoroutine(ChaseTarget());
                 }
 
-                //Call Action Method
+                Action();
                 break;
         }
     }
-    public void GoTo(Vector3 target)
+    public virtual void GoTo(Vector3 target)
     {
         StopChase();
         _currentState = AIState.Chase;
@@ -67,7 +79,7 @@ public class Ship : MonoBehaviour
         _agent.SetDestination(target);
     }
 
-    public void GoTo(Ship target)
+    public virtual void GoTo(Ship target)
     {
         StopChase();
         _currentState = AIState.Chase;
@@ -76,7 +88,13 @@ public class Ship : MonoBehaviour
         _chaseCoroutine = StartCoroutine(ChaseTarget());
     }
 
-    void StopChase()
+    public virtual void TakeDamage(Ship attacker, float damage)
+    {
+        _health -= damage;
+        Debug.Log(damage + " damage is recieved from " + attacker.name.ToString() + " to " + name.ToString());
+    }
+
+    protected void StopChase()
     {
         _agent.isStopped = true;
 
@@ -87,7 +105,7 @@ public class Ship : MonoBehaviour
         }
     }
 
-    IEnumerator ChaseTarget()
+    protected IEnumerator ChaseTarget()
     {
         _agent.isStopped = false;
         while (true)
@@ -97,4 +115,5 @@ public class Ship : MonoBehaviour
             _agent.SetDestination(_target.transform.position);
         }
     }
+    protected abstract void Action();
 }
