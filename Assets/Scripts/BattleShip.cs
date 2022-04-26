@@ -22,7 +22,7 @@ public class BattleShip : Ship
             if (_attackTimer >= _attackCooldown)
             {
                 _attackTimer = 0f;
-                _target.TakeDamage(this, 10f);
+                _target.TakeDamage(this, 500f);
             }
         }
     }

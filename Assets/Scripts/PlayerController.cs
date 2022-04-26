@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,27 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float panSpeed = 5f;
+    [SerializeField] ShipCursor _cursor; //? Should it has own script ? should it be instantiated every time or stay in a variable ?
     Camera _camera;
     Ship _selection;
+
+    private void OnEnable()
+    {
+        Ship.OnShipDestroy += OnShipDestroyed;
+    }
+    private void OnDisable()
+    {
+        Ship.OnShipDestroy -= OnShipDestroyed;
+    }
+
+    void OnShipDestroyed(Ship ship)
+    {
+        if (ship.Team == Ship.ShipTeam.Mercenary)
+        {
+            Debug.Log("Ally Ship Destroyed");
+            //Todo: Shake Camera
+        }
+    }
 
     private void Awake()
     {
@@ -55,6 +75,15 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             _selection = hit.collider.GetComponent<Ship>();
+        }
+
+        if (_selection)
+        {
+            _cursor.SetTarget(_selection.transform);
+        }
+        else
+        {
+            _cursor.ClearTarget();
         }
     }
 

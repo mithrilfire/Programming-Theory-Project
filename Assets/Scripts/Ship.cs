@@ -8,12 +8,15 @@ public abstract class Ship : MonoBehaviour
 {
     [SerializeField] protected ShipTeam _team;
     [SerializeField] protected ShipClass _shipClass;
+    protected uint _shipId; //Todo: Integrate ids for OnDestroyEvents
     protected float _health = 100f;
     protected NavMeshAgent _agent;
-    protected Ship _target;
+    [SerializeField] protected Ship _target;
     protected Coroutine _chaseCoroutine;
     protected AIState _currentState;
     public ShipTeam Team { get => _team; }
+    public delegate void ShipAction(Ship ship);
+    public static event ShipAction OnShipDestroy;
 
     public enum AIState
     {
@@ -91,6 +94,15 @@ public abstract class Ship : MonoBehaviour
     public virtual void TakeDamage(Ship attacker, float damage)
     {
         _health -= damage;
+
+        if (_health <= 0)
+        {
+            //! If gameobject has destroyed while selected, cursor has destroyed too because cursor is child of gameobject
+            //* Custom destroying script or following cursor script without parenting
+            //* Ship has been destroyed event ?
+            OnShipDestroy?.Invoke(this);
+        }
+
         Debug.Log(damage + " damage is recieved from " + attacker.name.ToString() + " to " + name.ToString());
     }
 
