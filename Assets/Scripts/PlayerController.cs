@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float panSpeed = 5f;
-    [SerializeField] ShipCursor _cursor; //? Should it has own script ? should it be instantiated every time or stay in a variable ?
+    [SerializeField] ShipCursor _cursor;
     Camera _camera;
     Ship _selection;
 
@@ -19,12 +19,12 @@ public class PlayerController : MonoBehaviour
         Ship.OnShipDestroy -= OnShipDestroyed;
     }
 
-    void OnShipDestroyed(Ship ship)
+    void OnShipDestroyed(Ship.ShipInfo info)
     {
-        if (ship.Team == Ship.ShipTeam.Mercenary)
+        if (info.Team == Ship.ShipTeam.Mercenary)
         {
-            Debug.Log("Ally Ship Destroyed");
             //Todo: Shake Camera
+            Debug.Log("Ally Ship Destroyed");
         }
     }
 
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
             Action();
         }
     }
-
+    //todo show show target and path via lines.
     private void Action()
     {
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            Ship _actionTarget = hit.collider.GetComponent<Ship>();
+            Ship _actionTarget = hit.collider.GetComponentInParent<Ship>();
 
             if (_actionTarget != null)
             {
@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //todo show ship health
     private void Select()
     {
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
@@ -74,12 +75,12 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            _selection = hit.collider.GetComponent<Ship>();
+            _selection = hit.collider.GetComponentInParent<Ship>();
         }
 
         if (_selection)
         {
-            _cursor.SetTarget(_selection.transform);
+            _cursor.SetTarget(_selection.transform, _selection.Team != Ship.ShipTeam.Mercenary);
         }
         else
         {

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CommanderClass
   m_EditorClassIdentifier: 
   _shipName: Commander Ship
+  _isItMainShip: 1
   _actionRange: 3
   _maxHealth: 1000
   _maxSpeed: 3.5

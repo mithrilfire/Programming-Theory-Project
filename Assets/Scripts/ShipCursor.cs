@@ -6,6 +6,8 @@ public class ShipCursor : MonoBehaviour
 {
     [SerializeField] MeshRenderer _renderer;
     [SerializeField] Vector3 _offset = new Vector3(0f, 1.5f, 0f);
+    [SerializeField] Color _allyColor;
+    [SerializeField] Color _enemyColor;
     Transform _target;
     private void Update()
     {
@@ -21,10 +23,22 @@ public class ShipCursor : MonoBehaviour
 
         transform.position = _target.position + _offset;
     }
-    public void SetTarget(Transform target)
+
+    public void SetTarget(Transform target, bool isTargetEnemy)
     {
         _target = target;
         _renderer.enabled = true;
+
+        MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+        if (isTargetEnemy)
+        {
+            mpb.SetColor("_BaseColor", _enemyColor);
+        }
+        else
+        {
+            mpb.SetColor("_BaseColor", _allyColor);
+        }
+        gameObject.GetComponent<MeshRenderer>().SetPropertyBlock(mpb);
     }
 
     public void ClearTarget()

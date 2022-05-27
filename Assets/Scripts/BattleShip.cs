@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class BattleShip : Ship
 {
+    //todo [SerializeField] Cannons cannons;
     [SerializeField] float _attackCooldown = 1f;
+    [SerializeField] float _damage = 500f;
+    [SerializeField] ShipCannon _cannon;
     float _attackTimer;
 
-    //Todo: Commander ship cant attack but battle ship (and maybe repair ship) can attack.
     //Todo: Coroutines can be used for cooldown system.
     protected override void Action()
     {
@@ -21,8 +23,8 @@ public class BattleShip : Ship
 
             if (_attackTimer >= _attackCooldown)
             {
+                _cannon.Fire(_target.transform.position, _damage);
                 _attackTimer = 0f;
-                _target.TakeDamage(this, 500f);
             }
         }
     }

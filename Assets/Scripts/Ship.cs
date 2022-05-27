@@ -8,14 +8,13 @@ public abstract class Ship : MonoBehaviour
 {
     [SerializeField] protected ShipTeam _team;
     [SerializeField] protected ShipClass _shipClass;
-    protected uint _shipId; //Todo: Integrate ids for OnDestroyEvents
     protected float _health = 100f;
     protected NavMeshAgent _agent;
     [SerializeField] protected Ship _target;
     protected Coroutine _chaseCoroutine;
     protected AIState _currentState;
     public ShipTeam Team { get => _team; }
-    public delegate void ShipAction(Ship ship);
+    public delegate void ShipAction(ShipInfo info);
     public static event ShipAction OnShipDestroy;
 
     public enum AIState
@@ -91,19 +90,16 @@ public abstract class Ship : MonoBehaviour
         _chaseCoroutine = StartCoroutine(ChaseTarget());
     }
 
-    public virtual void TakeDamage(Ship attacker, float damage)
+    public virtual void TakeDamage(float damage)
     {
         _health -= damage;
 
         if (_health <= 0)
         {
-            //! If gameobject has destroyed while selected, cursor has destroyed too because cursor is child of gameobject
-            //* Custom destroying script or following cursor script without parenting
-            //* Ship has been destroyed event ?
-            OnShipDestroy?.Invoke(this);
+            OnShipDestroy?.Invoke(new ShipInfo(_team, _shipClass.IsItMainShip));
+            Destroy(gameObject);
         }
-
-        Debug.Log(damage + " damage is recieved from " + attacker.name.ToString() + " to " + name.ToString());
+        Debug.Log(_health);
     }
 
     protected void StopChase()
@@ -128,4 +124,16 @@ public abstract class Ship : MonoBehaviour
         }
     }
     protected abstract void Action();
+
+    public class ShipInfo
+    {
+        public ShipTeam Team { get; private set; }
+        public bool IsItMainShip { get; private set; }
+
+        public ShipInfo(ShipTeam team, bool isItMainShip)
+        {
+            Team = team;
+            IsItMainShip = isItMainShip;
+        }
+    }
 }

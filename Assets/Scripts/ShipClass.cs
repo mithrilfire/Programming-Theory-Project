@@ -6,6 +6,7 @@ using UnityEngine;
 public class ShipClass : ScriptableObject
 {
     [SerializeField] string _shipName = "ShipClass";
+    [SerializeField] bool _isItMainShip = false;
     [SerializeField] float _actionRange = 3f;
     [SerializeField] float _maxHealth = 100f;
     [SerializeField] float _maxSpeed = 3.5f;
@@ -13,6 +14,7 @@ public class ShipClass : ScriptableObject
     [SerializeField] float _acceleration = 8f;
 
     public string ShipName { get => _shipName; set => _shipName = value; }
+    public bool IsItMainShip { get => _isItMainShip; set => _isItMainShip = value; }
     public float ActionRange { get => _actionRange; set => _actionRange = value; }
     public float MaxHealth { get => _maxHealth; set => _maxHealth = value; }
     public float MaxSpeed { get => _maxSpeed; set => _maxSpeed = value; }
