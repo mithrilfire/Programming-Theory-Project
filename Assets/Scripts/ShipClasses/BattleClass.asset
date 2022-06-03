@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: BattleClass
   m_EditorClassIdentifier: 
   _shipName: Battle Ship
+  _isItMainShip: 0
   _actionRange: 6
   _maxHealth: 250
   _maxSpeed: 4
-  _angularSpeed: 120
+  _angularSpeed: 480
   _acceleration: 9

@@ -20,8 +20,10 @@ public class ShipCursor : MonoBehaviour
         {
             return;
         }
-
-        transform.position = _target.position + _offset;
+        Vector3 pos = _target.position;
+        pos.y = 0f;
+        pos += _offset;
+        transform.position = pos;
     }
 
     public void SetTarget(Transform target, bool isTargetEnemy)

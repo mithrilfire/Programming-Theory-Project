@@ -8,12 +8,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Body
-    second: {fileID: 2100000, guid: 8f570ab2f93d7964fb17ed6d1d0123b6, type: 2}
+    second: {fileID: 2100000, guid: 68d0d0015c32c1244b593ede7d80ea33, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Sail
-    second: {fileID: 2100000, guid: 67831db8290009f44856e7ab4e02a92c, type: 2}
+    second: {fileID: 2100000, guid: 5ddf7fa4479e7384b9c1379fd11bcb03, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

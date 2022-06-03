@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         if (info.Team == Ship.ShipTeam.Mercenary)
         {
             //Todo: Shake Camera
-            Debug.Log("Ally Ship Destroyed");
+            Debug.LogWarning("Ally Ship Destroyed");
         }
     }
 
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
             Action();
         }
     }
-    //todo show show target and path via lines.
+
     private void Action()
     {
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         {
             Ship _actionTarget = hit.collider.GetComponentInParent<Ship>();
 
-            if (_actionTarget != null)
+            if (_actionTarget != null && _actionTarget != _selection)
             {
                 _selection.GoTo(_actionTarget);
             }

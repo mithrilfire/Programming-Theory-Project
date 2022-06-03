@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// INHERITANCE
 public class BattleShip : Ship
 {
-    //todo [SerializeField] Cannons cannons;
     [SerializeField] float _attackCooldown = 1f;
     [SerializeField] float _damage = 500f;
     [SerializeField] ShipCannon _cannon;
     float _attackTimer;
 
+    // POLYMORPHISM
     //Todo: Coroutines can be used for cooldown system.
     protected override void Action()
     {

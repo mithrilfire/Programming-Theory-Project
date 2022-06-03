@@ -16,6 +16,6 @@ MonoBehaviour:
   _isItMainShip: 1
   _actionRange: 3
   _maxHealth: 1000
-  _maxSpeed: 3.5
-  _angularSpeed: 120
+  _maxSpeed: 3
+  _angularSpeed: 360
   _acceleration: 8

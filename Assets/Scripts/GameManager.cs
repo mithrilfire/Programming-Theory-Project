@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameState _currentState = GameState.Play;
+    [SerializeField] UIManager _uIManager;
     enum GameState
     {
         MainMenu,
@@ -24,9 +25,17 @@ public class GameManager : MonoBehaviour
     {
         if (_currentState == GameState.GameOver)
         {
-            Debug.Log("Game Over");
+            _uIManager.SetActiveMenu(UIManager.Menu.GameOverMenu);
             _currentState = GameState.MainMenu;
+        }/*
+        else if (_currentState == GameState.MainMenu)
+        {
+
         }
+        else if (_currentState == GameState.Play)
+        {
+
+        }*/
     }
 
     void OnShipDestroyed(Ship.ShipInfo info)

@@ -15,7 +15,7 @@ Material:
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2998
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -35,15 +35,26 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _CloudStrength: 0.8
+    - _Metallic: 0
+    - _NormalStrength: 0.01
     - _QueueControl: 0
-    - _QueueOffset: 0
+    - _QueueOffset: -2
+    - _Smoothness: 0.9
     - _Speed1: 0.05
     - _Speed2: -0.1
+    - _WaveMultiplier: 0.2
+    - _WavePower: 1
+    - _WaveScale: 3
     m_Colors:
-    - _DeepColor: {r: 0.07320217, g: 0.14242557, b: 0.44339618, a: 0}
+    - _CloudTiling: {r: 10, g: 10, b: 0, a: 0}
+    - _CloudVector: {r: -0.1, g: 0, b: 0, a: 0}
+    - _DeepColor: {r: 0, g: 0.051567707, b: 0.1882353, a: 1}
+    - _DisplacementSpeed: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
-    - _ShallowColor: {r: 0, g: 0.6860466, b: 1, a: 0}
-    - _Tiling: {r: 40, g: 40, b: 0, a: 0}
+    - _ShallowColor: {r: 0, g: 0.17335111, b: 0.4716981, a: 1}
+    - _Tiling: {r: 20, g: 20, b: 0, a: 0}
+    - _WaveTiling: {r: 10, g: 20, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8269905837841116513
 MonoBehaviour:

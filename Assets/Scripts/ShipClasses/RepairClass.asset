@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: RepairClass
   m_EditorClassIdentifier: 
   _shipName: Repair Ship
+  _isItMainShip: 0
   _actionRange: 4
   _maxHealth: 150
   _maxSpeed: 5
-  _angularSpeed: 120
+  _angularSpeed: 720
   _acceleration: 10

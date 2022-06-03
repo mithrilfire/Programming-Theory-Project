@@ -46,7 +46,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _SailColor: {r: 0.5188679, g: 0.15908687, b: 0.15908687, a: 0}
+    - _SailColor: {r: 0.9150943, g: 0.82444817, b: 0.82444817, a: 0}
     - _WoodColor: {r: 0.3, g: 0.21025643, b: 0.19230771, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4691676517537968279
